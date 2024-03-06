@@ -1,0 +1,51 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Simple Node Page</title>
+  </head>
+  <body>
+    <h1>Conversation with historical figures.</h1>
+    <img
+      style="width: 200px"
+      src="https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcSX3ZOe1nBi0kfUtkLB7NcH2Qm64eR8eoZ-0TUppPNN4PfjcGAyW-eemOs2JKdRYH6R"
+      alt="steve jobs"
+    />
+    <img
+      style="width: 200px"
+      src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8ed3d547-94ff-48e1-9f20-8c14a7030a02_2000x2000.jpeg"
+      alt="apple inc. logo"
+    />
+    <div>
+      <textarea rows="3" placeholder="chat.."></textarea>
+      <button id="fetchButton">Send</button>
+    </div>
+    <p id="apiResponse">response will be shown here</p>
+
+    <script>
+      document
+        .getElementById("fetchButton")
+        .addEventListener("click", function (event) {
+
+          const targetButton = event.target;
+          const textarea = targetButton.parentElement.querySelector('textarea');
+          const chat = textarea.value;
+
+          console.log(chat)
+
+
+          fetch(`/quote?chat=${chat}`)
+            .then(function (response) {
+              return response.text();
+            })
+            .then(function (text) {
+              document.getElementById("apiResponse").innerText = text;
+            })
+            .catch(function (error) {
+              console.log("Request failed", error);
+            });
+        });
+    </script>
+  </body>
+</html>
